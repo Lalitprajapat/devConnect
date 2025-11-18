@@ -49,6 +49,37 @@ app.get("/feed",(req,res)=>{
     }
 });
 
+//delete api
+app.delete("/user",async(req,res)=>{
+    const userId = req.body.userId;
+    try{
+        await User.findByIdAndDelete({_id: userId});
+        res.send("User deleted successfully");
+    }catch(err){
+        res.status(500).send("Error in deleting user"+err.message);
+    }
+});
+
+//update api
+app.patch("/user", async(req,res)=>{
+    const data = req.body;
+    
+    try{
+        const ALLOWED_UPDATES = ["photoUrl", "about", "skills","password","age","firstName","lastName","gender"];
+        const isUpdateAllowed = Object.keys(data).every((k)=>{
+            ALLOWED_UPDATES.includes(k);
+        });
+        if(!isUpdateAllowed){
+            throw new Error("Update not allowed"+err.message);
+            // res.status(400).send("Update not allowed");
+        }
+        await User.findByIdAndUpdate({_id:data.userId}, data, {runValidators: true});
+        res.send("User updated successfully");
+        }catch(err){
+        res.status(400).send("Error in updating user"+err.message);
+    }
+})
+
 connectDB()
     .then(()=>{
         console.log("database connected");
