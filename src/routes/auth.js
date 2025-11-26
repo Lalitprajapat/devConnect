@@ -2,6 +2,8 @@ const express = require("express");
 const { validateSignUpData } = require("../utils/validation");
 const bcrypt = require("bcrypt");
 const User = require("../models/user");
+const validator = require("validator");
+
 
 
 const authRouter = express.Router();
@@ -36,7 +38,7 @@ authRouter.post("/signup", async (req,res)=>{
         await user.save();
         res.send("User added successfully");
     }catch(err){
-        res.status(400).send("Error in saving user info"+err.message);
+        res.status(400).send("Error in saving user info "+err.message);
     }
 });
 
