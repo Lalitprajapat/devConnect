@@ -45,7 +45,7 @@ userRouter.get("/user/connections", userAuth, async (req, res)=>{
         res.status(500).send("Error in fetching user connections"+err.message);
     }
 });
-
+ 
 userRouter.get("/feed", userAuth, async (req, res)=>{
     try{
         const loggedInUser = req.user;
@@ -72,7 +72,7 @@ userRouter.get("/feed", userAuth, async (req, res)=>{
             ],
 
         }).select(user_safe_data).skip((page-1)*limit).limit(limit);
-        res.send(user);
+        res.json({data:user});
 
     }catch(err){
         res.status(404).send("Error in fetching feed data "+err.message);
