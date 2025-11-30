@@ -1,1 +1,1 @@
-mongodb+srv://Tdev_db_user:uQnNmAY8h8PfhgDj@namastedev.qzyhara.mongodb.net/
+const db_URL
