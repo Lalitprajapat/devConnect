@@ -4,11 +4,12 @@ const { ConnectionRequestModel } = require('../models/connectionRequest');
 const userRouter = express.Router();
 const User = require('../models/user'); 
 
-const user_safe_data = "firstName lastNAme photoUrl age gender about skills";
+const user_safe_data = "firstName lastName photoUrl age gender about skills";
 
 userRouter.get("/user/requests/received", userAuth, async (req, res)=>{
     try{
         const loggedInUser = req.user;
+        if (!loggedInUser) return res.status(401).json({ message: "Unauthorized" });
         const requests = await ConnectionRequestModel.find({
             toUserId: loggedInUser._id,
             status: "interested"
@@ -26,12 +27,13 @@ userRouter.get("/user/connections", userAuth, async (req, res)=>{
     try{
         const loggedInUser = req.user;
         const connections = await ConnectionRequestModel.find({
+            status: "accepted",
             $or:[{fromUserId: loggedInUser._id},
                  {toUserId: loggedInUser._id}
             ]
         }).populate("fromUserId", user_safe_data).populate("toUserId", user_safe_data);
         const data = connections.map((connection)=> {
-            if(connection.fromUserId._id.toString() === loggedInUser._id.toString()){
+            if(connection.fromUserId?._id?.toString() === loggedInUser._id.toString()){
                 return connection.toUserId;
             }
             return connection.fromUserId;

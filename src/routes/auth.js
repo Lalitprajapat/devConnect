@@ -53,7 +53,7 @@ authRouter.post("/login", async (req,res)=>{
     try{
         const {emailId, password} = req.body;
         if(!validator.isEmail(emailId)){
-            throw new Error("Invalid email address");
+            return res.status(404).send("User not found");
         }
         const user = await User.findOne({emailId: emailId});
         if(!user){ 
@@ -70,7 +70,7 @@ authRouter.post("/login", async (req,res)=>{
             res.cookie("token", token);
             res.send(user);
         }else{
-            throw new Error("Invalid password");
+            return res.status(401).send("Invalid password");
         }
     }catch(err){
         res.status(500).send("Error in user login"+err.message);
