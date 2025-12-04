@@ -53,7 +53,7 @@ userRouter.get("/feed", userAuth, async (req, res)=>{
         const loggedInUser = req.user;
 
         const page = parseInt(req.query.page) || 1;
-        let limit = parseInt(req.query.limit) || 2;
+        let limit = parseInt(req.query.limit) || 5;
         limit = limit>50?50:limit;
 
         //get all connections

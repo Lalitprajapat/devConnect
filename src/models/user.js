@@ -30,9 +30,10 @@ const userSchema = new mongoose.Schema({
     gender:{
         type:String,
         enum:{
-            values: ["male","female","other"],
+            values: ["male","female","other",""],
             message: '{VALUE} is not a gender type'
         },
+        default: null
 
         // validate(value){
         //     if(!["male","female","other"].includes(value.toLowerCase())){
@@ -73,11 +74,11 @@ userSchema.methods.getJWT = async function(){
     return token;
 };
 
-userSchema.methods.validatePassword = async function(password){
-    const user = this;
-    const isPasswordValid = await bcrypt.compare(password, this.password);
-    return isPasswordValid;
-};
+// userSchema.methods.validatePassword = async function(password){
+//     const user = this;
+//     const isPasswordValid = await bcrypt.compare(password, this.password);
+//     return isPasswordValid;
+// };
 
 const User = mongoose.model("User", userSchema);
 
