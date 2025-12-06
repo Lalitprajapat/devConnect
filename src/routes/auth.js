@@ -8,6 +8,7 @@ const validator = require("validator");
 
 const authRouter = express.Router();
 
+
 authRouter.post("/signup", async (req,res)=>{
     //validation of data
     try{
@@ -45,7 +46,7 @@ authRouter.post("/signup", async (req,res)=>{
 
         res.json({message:"User added successfully", data:savedUser});
     }catch(err){
-        res.status(400).send("Error in saving user info "+err.message);
+        return res.status(400).send("Error in saving user info "+err.message);
     }
 });
 
@@ -55,9 +56,10 @@ authRouter.post("/login", async (req,res)=>{
         if(!validator.isEmail(emailId)){
             return res.status(404).send("User not found");
         }
-        const user = await User.findOne({emailId: emailId});
+
+        const user = await User.findOne({emailId:emailId});
         if(!user){ 
-            res.status(404).send("User not found");
+            return res.status(404).send("User not found");
         }    
         const isPasswordValid = await user.validatePassword(password);
 
@@ -73,7 +75,7 @@ authRouter.post("/login", async (req,res)=>{
             return res.status(401).send("Invalid password");
         }
     }catch(err){
-        res.status(500).send("Error in user login"+err.message);
+        return res.status(500).send("Error in user login"+err.message);
     }
 });
 
@@ -82,7 +84,7 @@ authRouter.post("/logout", async(req,res)=>{
        res.clearCookie("token");
         res.send("User logged out successfully");
     }catch(err){
-        res.status(500).send("Error in user logout"+err.message);
+        return res.status(500).send("Error in user logout"+err.message);
     }
 });
 
