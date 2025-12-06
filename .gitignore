@@ -1,4 +1,3 @@
 node_modules/
 *.txt/
-src/utils/constants.js
 .env
