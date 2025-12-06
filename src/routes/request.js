@@ -3,12 +3,15 @@ const requestRouter = express.Router();
 const {userAuth} = require('../middleware/auth');
 const { ConnectionRequestModel } = require('../models/connectionRequest');
 const User = require('../models/user');
+const sendEmail = require("../utils/sendEmail")
 
 requestRouter.post("/request/send/:status/:toUserId", userAuth, async(req,res)=>{
     try{
         const fromUserId = req.user._id;
         const toUserId =  req.params.toUserId;
         const status = req.params.status;
+       
+
 
         const allowedStatuses = ["ignore", "interested"];
         if(!allowedStatuses.includes(status)){
@@ -40,6 +43,12 @@ requestRouter.post("/request/send/:status/:toUserId", userAuth, async(req,res)=>
         });
 
         const data = await connectionRequestModel.save();
+
+        const emailRes = await sendEmail.run(
+            toUser.emailId,
+            `${req.user.firstName} sent you a new connection request!`
+        );
+
         res.send("Connection request sent successfully");
 
     }catch(err){
