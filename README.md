@@ -77,9 +77,6 @@ Features:
 
     -Pre-save hooks 
 
-Copy + paste EXACTLY this:
-
----
 
 ### 📁 Backend Project Structure
 
