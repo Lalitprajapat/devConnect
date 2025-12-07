@@ -77,7 +77,13 @@ Features:
 
     -Pre-save hooks 
 
-📁 Backend Project Structure
+Copy + paste EXACTLY this:
+
+---
+
+### 📁 Backend Project Structure
+
+```bash    
 backend/
 ├── src/
 │   ├── config/
