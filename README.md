@@ -1,4 +1,4 @@
-🚀 Backend (Node.js + Express + MongoDB + AWS SES)
+### 🚀 Backend (Node.js + Express + MongoDB + AWS SES)
 
 The backend of DevConnect is built using Node.js, Express.js, MongoDB, and JWT authentication, structured using a clean MVC architecture.
 It handles authentication, connection logic, user profiles, email workflows, and secure API endpoints.
@@ -78,7 +78,7 @@ Features:
     -Pre-save hooks 
 
 
-### 📁 Backend Project Structure
+📁 Backend Project Structure
 
 ```bash    
 backend/
